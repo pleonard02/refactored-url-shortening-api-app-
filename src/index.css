@@ -186,10 +186,6 @@ footer {
     flex: 1;
 }
 
-#shorten-link {
-    width: 100%;
-}
-
 .shorten-url-container {
     display: flex;
     flex-direction: row;
@@ -222,6 +218,7 @@ footer {
 
 #shorten-link {
     position: relative;
+    width: 100%;
     z-index: 1;
     flex: 1;
     height: 55px;
@@ -229,7 +226,14 @@ footer {
     box-sizing: border-box;
     border: none;
     border-radius: 8px;
+    background-color: white;
+    color: var(--gray-900);
     font: inherit;
+}
+
+#shorten-link:focus {
+    outline: 3px solid var(--blue-200);
+    outline-offset: 2px;
 }
 
 #shorten-link::placeholder {
