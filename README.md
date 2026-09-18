@@ -67,8 +67,8 @@ I also moved the Bitly request behind a Netlify serverless function so the API t
 
 The production application is deployed with Netlify.
 
-**Live Demo:** 
+**Live Demo:** https://silly-cucurucho-7d9c57.netlify.app/
 
 ## Repository
 
-**GitHub:** 
+**GitHub:** https://github.com/pleonard02/refactored-url-shortening-api-app-
