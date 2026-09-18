@@ -1,12 +1,34 @@
 import { useState, type FormEvent } from "react";
+import { validateUrl, UrlValidationError, ApiError } from "../utils/errorHandler";
+import { useShortenedLinks } from "../hooks/useShortenedLinks";
+import ShortenedLinkCard from "./ShortenedLinkCard";
 
 function UrlShortener() {
     const [url, setUrl] = useState("");
+    const [error, setError] = useState("");
 
-    function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    const { links, shortenUrl, isLoading } = useShortenedLinks();
+
+    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
-        console.log("Submitted URL: ", url);
+        try {
+            const validUrl = validateUrl(url);
+
+            setError("");
+
+            await shortenUrl(validUrl);
+            setUrl(""); 
+
+        } catch (error) {
+            if (error instanceof UrlValidationError) {
+                setError(error.message);
+            } else if (error instanceof ApiError) {
+                setError(error.message);
+            } else {
+                setError("Something went wrong. Please try again.");
+            }
+        }
     }
 
     return (
@@ -22,8 +44,10 @@ function UrlShortener() {
                         type="url"
                         name="shorten-link"
                         id="shorten-link"
+                        className={error ? "input-error" : ""}
                         aria-label="URL to shorten"
-                        aria-describedby="url-error"
+                        aria-describedby={error ? "url-error" : undefined}
+                        aria-invalid={error ? true : undefined}
                         placeholder="Shorten a link here..."
                         value={url}
                         onChange={(event) => setUrl(event.target.value)}
@@ -34,18 +58,31 @@ function UrlShortener() {
                         id="url-error"
                         className="error-message"
                         aria-live="polite"
-                    />
+                    >
+                        {error}
+                    </p>
                 </div>
 
                 <button
                     type="submit"
                     id="shorten-btn"
+                    disabled={isLoading}
                 >
-                    Shorten It!
+                    {isLoading ? "Shortening..." : "Shorten It!"}
                 </button>
             </form>
 
-            <div id="shortened-links-container" />
+            <div 
+                id="shortened-links-container"
+                className="mx-auto w-full min-w-0 max-w-[1110px] px-6 md:px-0"
+            >
+                {links.map((link) => (
+                    <ShortenedLinkCard
+                        key={link.link}
+                        link={link}
+                    />
+                ))}
+            </div>
         </section>
     );
 }

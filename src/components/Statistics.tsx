@@ -1,10 +1,11 @@
-import brandRecognition from '../images/icon-brand-recognition.svg'
-import detailedRecords from '../images/icon-detailed-records.svg'
-import fullyCustomizable from '../images/icon-fully-customizable.svg'
+import brandRecognition from '../images/icon-brand-recognition.svg';
+import detailedRecords from '../images/icon-detailed-records.svg';
+import fullyCustomizable from '../images/icon-fully-customizable.svg';
+import Section from "./Section";
 
 function Statistics() {
     return (
-        <section className="more-information-container" id="features">
+        <Section className="more-information-container" id="features">
             <div className="advanced-stats-container">
                 <h3>Advanced Statistics</h3>
 
@@ -70,7 +71,7 @@ function Statistics() {
                 </p>
                 </article>
             </div>
-        </section>
+        </Section>
     );
 }
 
